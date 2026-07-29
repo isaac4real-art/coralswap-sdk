@@ -1,0 +1,18 @@
+name: apply-zod-patch
+on:
+  workflow_dispatch:
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/492-swap-zod-validation
+      - run: python3 scripts/apply_zod_patch.py
+      - run: git config user.email "isaac4real-art@users.noreply.github.com"
+      - run: git config user.name "isaac4real-art"
+      - run: git add src/modules/swap.ts
+      - run: git commit -m "feat(swap): migrate validation to zod schemas"
+      - run: git push
